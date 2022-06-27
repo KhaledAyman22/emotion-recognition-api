@@ -6,4 +6,4 @@ entrypoint: gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
 resources:
   cpu: 1
   memory_gb: 4
-  disk_size_gb: 1
+  disk_size_gb: 10
