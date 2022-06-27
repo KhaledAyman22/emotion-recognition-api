@@ -1,3 +1,4 @@
+import uvicorn
 import numpy as np
 import cv2 as cv
 import tensorflow.keras as keras
@@ -46,10 +47,21 @@ async def FetchFace(img):
 @app.post('/')
 async def GetMood(item: Item):
     b = base64.b64decode(item.img)
-    img = Image.open(io.BytesIO(b))
-    img = await FetchFace(img)
+    img = np.array(Image.open(io.BytesIO(b)))
 
-    if img == -1:
+    fc = cv.CascadeClassifier(r'haarcascade_frontalface_default.xml')
+    detection_result, rejectLevels, levelWeights = fc.detectMultiScale3(img, outputRejectLevels=True,
+                                                                        scaleFactor=1.1, minNeighbors=3,
+                                                                        minSize=(48, 48))
+    try:
+        levelWeights = levelWeights.reshape(len(levelWeights))
+        max_index = list(levelWeights).index(levelWeights.max())
+        x, y, w, h = detection_result[max_index]
+
+        face = img[y:y + h, x:x + w]
+        gray = cv.cvtColor(face, cv.COLOR_BGR2GRAY)
+        img = cv.resize(gray, (128, 128))
+    except:
         return "Couldn't detect a face"
 
     input_arr = np.array([img])
@@ -62,3 +74,5 @@ async def GetMood(item: Item):
 @app.get('/')
 async def Welcome():
     return 'Welcome to Mood Classifier API'
+
+
