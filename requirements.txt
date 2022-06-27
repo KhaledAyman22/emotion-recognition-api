@@ -1,7 +1,7 @@
-fastapi
-numpy
-Pillow
-pydantic
-tensorflow
-opencv-python
+fastapi==0.78.0
+numpy==1.21.5
+Pillow==9.1.1
+pydantic==1.8.2
+tensorflow==2.6.0
+uvicorn
 gunicorn
