@@ -1,0 +1,7 @@
+fastapi
+numpy
+Pillow
+pydantic
+tensorflow
+opencv-python
+gunicorn
