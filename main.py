@@ -4,6 +4,7 @@ import cv2 as cv
 import tensorflow.keras as keras
 from PIL import Image
 from fastapi import FastAPI
+from starlette.responses import FileResponse
 from pydantic import BaseModel
 import io
 import base64
@@ -24,6 +25,13 @@ class Item(BaseModel):
 
 
 model = keras.models.load_model('my_arch64.h5')
+
+favicon_path = 'favicon.ico'
+
+
+@app.get('/favicon.ico')
+async def favicon():
+    return FileResponse(favicon_path)
 
 
 @app.post('/')
@@ -56,5 +64,3 @@ async def GetMood(item: Item):
 @app.get('/')
 async def Welcome():
     return 'Welcome to Mood Classifier API'
-
-
