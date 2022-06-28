@@ -26,13 +26,6 @@ class Item(BaseModel):
 
 model = keras.models.load_model('my_arch64.h5')
 
-favicon_path = 'favicon.ico'
-
-
-@app.get('/favicon.ico')
-async def favicon():
-    return FileResponse(favicon_path)
-
 
 @app.post('/')
 async def GetMood(item: Item):
