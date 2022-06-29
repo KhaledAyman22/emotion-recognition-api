@@ -7,3 +7,4 @@ uvicorn
 gunicorn
 opencv-python
 starlette
+opencv-contrib-python-headless
